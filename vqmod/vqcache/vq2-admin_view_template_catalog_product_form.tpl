@@ -66,7 +66,8 @@
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-meta-title<?php echo $language['language_id']; ?>"><?php echo $entry_meta_title; ?></label>
                     <div class="col-sm-10">
-                      <input type="text" name="product_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control" />
+                      <input onload="max_title(this)" onkeyup="max_title(this)" onkeypress="max_title(this)" name="product_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control" />
+			Google will truncate your <code>title</code> tag after ~67 chars. Try to keep your title under 67 chars. <span id="title_remain" class="counter"></span>
                       <?php if (isset($error_meta_title[$language['language_id']])) { ?>
                       <div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
                       <?php } ?>
@@ -75,7 +76,8 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-meta-description<?php echo $language['language_id']; ?>"><?php echo $entry_meta_description; ?></label>
                     <div class="col-sm-10">
-                      <textarea name="product_description[<?php echo $language['language_id']; ?>][meta_description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
+                      <textarea onload="max_descr(this)" onkeyup="max_descr(this)" onkeypress="max_descr(this)" name="product_description[<?php echo $language['language_id']; ?>][meta_description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
+			The <code>meta</code> description will be limited to 156 chars. <span id="descr_remain" class="counter"></span>
                     </div>
                   </div>
                   <div class="form-group">
@@ -240,9 +242,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-keyword"><span data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><?php echo $entry_keyword; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="keyword" value="<?php echo $keyword; ?>" id="seo_keyword" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
+                  <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
                   <?php if ($error_keyword) { ?>
-<tr><td></td><td><div id="seo_keyword_msg" style="margin-top: 12px;"></div></td></tr>
                   <div class="text-danger"><?php echo $error_keyword; ?></div>
                   <?php } ?>               
                 </div>
@@ -1402,27 +1403,35 @@ $('.datetime').datetimepicker({
 $('#language a:first').tab('show');
 $('#option a:first').tab('show');
 //--></script></div>
-<script type="text/javascript">
+<script language="javascript">
+				function max_title(input) {
+				total = 67;
+				tam = 0;
+				lista = document.getElementsByName('product_description[<?php echo $language['language_id']; ?>][meta_title]');
 
-	$( "#seo_keyword" ).keyup(function() {
+				for (i=0; i<lista.length; i++)
+				  tam += lista[i].value.length;
+				meta = total - tam;
+					if (meta >= 1){
+						title_remain.innerHTML = "<font color='green'> "+meta+" chars left</font>";
+					} else {
+					title_remain.innerHTML = "<font color='red'> "+meta+" chars left.</font>";
+					}
+				}
+				function max_descr(txtarea) {
+				total = 156;
+				tam = 0;
+				lista = document.getElementsByName('product_description[<?php echo $language['language_id']; ?>][meta_description]');
 
-		$.ajax({
-		    dataType: 'json',
-		    type: 'POST',
-    		url: 'index.php?route=catalog/product/checkKeyword&token=<?php echo $this->request->get['token']; ?>',
-    		data: 'product_id=<?php echo $this->request->get['product_id']; ?>&keyword=' + encodeURIComponent($('input[name=\'keyword\']').val()),
-		    success: function(result){
-		      if (result.error) {
-		        $('#seo_keyword_msg').html('<div class="warning">' + result.error + '</div>');
-		      }
-		      
-		      if (result.success) {
-		        $('#seo_keyword_msg').html('<div class="success">' + result.success + '</div>');
-		      }
-		    }
-          });
-          
-	});
-
-</script>
+				for (i=0; i<lista.length; i++)
+				  tam += lista[i].value.length;
+				meta = total - tam;
+					if (meta >= 1){
+						descr_remain.innerHTML = "<font color='green'> "+meta+" chars left</font>";
+					} else {
+					descr_remain.innerHTML = "<font color='red'> "+meta+" chars left.</font>";
+					}
+				}
+				</script>
+			
 <?php echo $footer; ?> 

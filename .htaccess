@@ -27,15 +27,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|js|css)
 RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
-RewriteRule ^index\.html$ / [R=301,L] 
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.php\ HTTP/ 
-RewriteRule ^index\.php$ / [R=301,L]
-RewriteCond %{QUERY_STRING} ^route=common/home$
-RewriteCond %{REQUEST_METHOD} !^POST$
-
-
-
-
 
 ### Additional Settings that may need to be enabled for some servers 
 ### Uncomment the commands by removing the # sign in front of it.
