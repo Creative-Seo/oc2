@@ -1,4 +1,7 @@
-<?php  require_once 'simple_html_dom.php';
+<?php  
+require_once 'sql.php';
+require_once 'simple_html_dom.php';
+
 $data = array();
 $url = 'http://www.ikea.com/ru/ru/catalog/allproducts/';
 header("Content-Type: text/html; charset=utf-8");
