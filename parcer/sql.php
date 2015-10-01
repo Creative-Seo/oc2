@@ -9,7 +9,7 @@ define( "TEMPLATE_PATH", "templates" );
 define( "HOMEPAGE_NUM_ARTICLES", 5 );
 define( "ADMIN_USERNAME", "admin" );
 define( "ADMIN_PASSWORD", "mypass" );
-require( CLASS_PATH . "/Article.php" );
+/*require( CLASS_PATH . "/Article.php" );
 
 function handleException( $exception ) {
   echo "Sorry, a problem occurred. Please try later.";
@@ -17,19 +17,6 @@ function handleException( $exception ) {
 }
 
 set_exception_handler( 'handleException' );
-
-DROP TABLE IF EXISTS articles;
-CREATE TABLE articles
-(
-  id              smallint unsigned NOT NULL auto_increment,
-  publicationDate date NOT NULL,                              # Когда статья опубликована
-  title           varchar(255) NOT NULL,                      # Полный заголовок статьи
-  summary         text NOT NULL,                              # Резюме статьи
-  content         mediumtext NOT NULL,                        # HTML содержание статьи
-
-  PRIMARY KEY     (id)
-);
-
 
 class Article
 {
@@ -136,5 +123,5 @@ class Article
   }
 
 }
-
+*/
 ?>
